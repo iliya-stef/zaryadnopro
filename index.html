@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Генератор на юридически документи за монтаж на зарядна станция за електромобил в жилищен блок — покана, протокол, писмо до ЕРД, декларация.">
+<title>ЗарядноПро — Документи за зарядна станция в блок</title>
+
+<!-- ═══════════════════════════════════════════════════════
+     STYLES
+════════════════════════════════════════════════════════ -->
+<style>
+/* ── Tokens ─────────────────────────────────────────── */
+:root {
+  --bg:             #f5f4f1;
+  --card:           #ffffff;
+  --border:         #e2e0da;
+  --border-strong:  #c5c2b8;
+  --text:           #1e1e1c;
+  --text-2:         #63615b;
+  --text-3:         #9a9890;
+  --accent:         #1560a8;
+  --accent-bg:      #e4f0fb;
+  --accent-text:    #0b3f7a;
+  --green:          #15803d;
+  --green-bg:       #dcfce7;
+  --amber:          #b45309;
+  --amber-bg:       #fef3c7;
+  --red:            #b91c1c;
+  --red-bg:         #fee2e2;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.07);
+  --shadow:         0 2px 8px rgba(0,0,0,.09);
+  --r:              12px;
+  --r-sm:           8px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:            #131211;
+    --card:          #1e1d1b;
+    --border:        #2f2e2b;
+    --border-strong: #46443f;
+    --text:          #e6e4de;
+    --text-2:        #9e9b93;
+    --text-3:        #66635b;
+    --accent:        #4d9fe8;
+    --accent-bg:     #0a2640;
+    --accent-text:   #7dc3f5;
+    --green:         #4ade80;
+    --green-bg:      #052e16;
+    --amber:         #fbbf24;
+    --amber-bg:      #1c1000;
+    --red:           #f87171;
+    --red-bg:        #1c0000;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,.3);
+    --shadow:        0 2px 10px rgba(0,0,0,.45);
+  }
+}
+
+/* ── Reset ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 28px 16px 80px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 800px; margin: 0 auto; }
+
+/* ── Top header ─────────────────────────────────────── */
+.site-header { margin-bottom: 32px; }
+.logo { font-size: 20px; font-weight: 700; color: var(--accent); letter-spacing: -.3px; display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+.logo-bolt { font-size: 22px; }
+.tagline { font-size: 14.5px; color: var(--text-2); max-width: 580px; line-height: 1.65; }
+
+/* ── Badge ──────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  background: var(--accent-bg); color: var(--accent-text);
+  padding: 3px 9px; border-radius: 99px; margin-bottom: 10px;
+}
+
+/* ── Card ───────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.card-title {
+  font-size: 14px; font-weight: 600; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px; color: var(--text);
+}
+.card-title .icon { font-size: 16px; }
+
+/* ── Progress ───────────────────────────────────────── */
+.progress-wrap { margin-bottom: 18px; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-3); margin-bottom: 6px; }
+.progress-meta .filled { color: var(--green); font-weight: 600; }
+.bar { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s cubic-bezier(.4,0,.2,1); }
+
+/* ── Form grid ──────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+.field { margin-bottom: 18px; }
+label {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 600; color: var(--text-2);
+  text-transform: uppercase; letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+label .req { color: var(--red); font-size: 10px; }
+input, select {
+  width: 100%; height: 40px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  padding: 0 12px;
+  font-size: 14px;
+  background: var(--card);
+  color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+  font-family: inherit;
+  -webkit-appearance: none; appearance: none;
+}
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239a9890' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+input.has-error, select.has-error { border-color: var(--red); }
+.field-msg { font-size: 11.5px; margin-top: 5px; display: none; }
+.field-msg.err { color: var(--red); display: block; }
+.field-msg.ok  { color: var(--green); display: block; }
+
+/* ── Checklist ──────────────────────────────────────── */
+.chklist { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+@media (max-width: 500px) { .chklist { grid-template-columns: 1fr; } }
+.chklist li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 13px; color: var(--text-2);
+  padding: 8px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.chklist li:nth-last-child(-n+2) { border-bottom: none; }
+@media (max-width: 500px) { .chklist li:last-child { border-bottom: none; } .chklist li:nth-last-child(2) { border-bottom: 0.5px solid var(--border); } }
+.ck-dot {
+  width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; transition: all .2s;
+}
+.ck-dot.ok { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+
+/* ── Tabs ───────────────────────────────────────────── */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+.tab {
+  display: flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  border-radius: var(--r-sm);
+  padding: 7px 13px;
+  font-size: 13px; cursor: pointer;
+  color: var(--text-2);
+  user-select: none;
+  transition: all .15s;
+  font-family: inherit;
+}
+.tab:hover { background: var(--bg); }
+.tab.active {
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Document preview ───────────────────────────────── */
+.doc-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 22px 26px;
+  font-size: 13.5px;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  font-family: "Georgia", "Times New Roman", serif;
+  max-height: 440px;
+  overflow-y: auto;
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+/* ── Actions ────────────────────────────────────────── */
+.actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  border-radius: var(--r-sm);
+  padding: 9px 16px;
+  font-size: 13.5px; cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+  transition: background .15s, opacity .15s, transform .1s;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--bg); }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-primary:hover { opacity: .88; background: var(--accent); }
+.btn-green { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+.btn-green:hover { opacity: .85; }
+.legal-note {
+  font-size: 11.5px; color: var(--text-3); margin-top: 12px; line-height: 1.6;
+  display: flex; gap: 6px; align-items: flex-start;
+}
+.legal-note .ico { flex-shrink: 0; margin-top: 1px; }
+
+/* ── Pricing cards ──────────────────────────────────── */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+@media (max-width: 500px) { .pricing-grid { grid-template-columns: 1fr; } }
+.pricing-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 16px 18px;
+  position: relative;
+}
+.pricing-card.featured { border-color: var(--accent); }
+.pricing-card .feat-badge {
+  position: absolute; top: -10px; left: 14px;
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 99px;
+}
+.pricing-card h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 4px; }
+.pricing-card .price { font-size: 22px; font-weight: 700; color: var(--accent-text); line-height: 1.2; margin-bottom: 6px; }
+.pricing-card .price sup { font-size: 13px; vertical-align: super; }
+.pricing-card .desc { font-size: 12px; color: var(--text-2); line-height: 1.55; }
+.pricing-card .items { list-style: none; margin-top: 10px; }
+.pricing-card .items li { font-size: 12px; color: var(--text-2); padding: 3px 0; display: flex; gap: 6px; }
+.pricing-card .items li::before { content: "✓"; color: var(--green); flex-shrink: 0; }
+
+/* ── Upsell banner ──────────────────────────────────── */
+.upsell {
+  background: linear-gradient(140deg, var(--accent-bg) 0%, var(--card) 100%);
+  border: 1px solid var(--accent);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.upsell h3 { font-size: 16px; font-weight: 700; color: var(--accent-text); margin-bottom: 8px; }
+.upsell > p { font-size: 13.5px; color: var(--text-2); margin-bottom: 20px; line-height: 1.65; }
+.upsell-cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.upsell-cta small { font-size: 12px; color: var(--text-3); }
+
+/* ── Footer ─────────────────────────────────────────── */
+.site-footer {
+  margin-top: 48px; padding-top: 20px;
+  border-top: 0.5px solid var(--border);
+  font-size: 12px; color: var(--text-3);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+.site-footer a { color: var(--text-3); text-decoration: underline; }
+
+/* ── Toast ──────────────────────────────────────────── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #111; color: #f5f5f5;
+  border-radius: 10px; padding: 11px 22px;
+  font-size: 13.5px; box-shadow: 0 6px 24px rgba(0,0,0,.3);
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+  z-index: 9999; white-space: nowrap; pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ════════════════════════════════════════════════════
+   PRINT STYLES — one document per page, no chrome
+═══════════════════════════════════════════════════ */
+@media print {
+  @page { size: A4; margin: 2cm 2.2cm; }
+
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+
+  /* hide everything except the print target */
+  .site-header, .progress-wrap, .card:not(.doc-card),
+  .upsell, .site-footer, #toast, .tabs, .actions,
+  .legal-note, .chklist-card { display: none !important; }
+
+  .doc-card { box-shadow: none !important; border: none !important; padding: 0 !important; margin: 0 !important; }
+
+  .doc-box {
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 !important;
+    font-size: 11.5pt !important;
+    line-height: 1.9 !important;
+    font-family: "Times New Roman", Times, serif !important;
+    white-space: pre-wrap !important;
+    page-break-inside: avoid;
+  }
+
+  /* Print header inserted by JS */
+  .print-doc-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 16pt;
+    font-size: 9pt;
+    color: #555;
+    font-family: Arial, sans-serif;
+    border-bottom: 0.5pt solid #ccc;
+    padding-bottom: 8pt;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══ SITE HEADER ══════════════════════════════════════ -->
+<header class="site-header">
+  <div class="logo"><span class="logo-bolt">⚡</span>ЗарядноПро</div>
+  <p class="tagline">
+    Попълни данните за блока веднъж — получаваш четири юридически коректни документа,
+    готови за печат и подаване. Спести часове бюрокрация.
+  </p>
+</header>
+
+<!-- ══ PROGRESS ═════════════════════════════════════════ -->
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="progLabel">Попълни задължителните полета</span>
+    <span id="progCount">0 / 6</span>
+  </div>
+  <div class="bar"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+</div>
+
+<!-- ══ FORM CARD ════════════════════════════════════════ -->
+<div class="card">
+  <div class="card-title"><span class="icon">📝</span> Данни за сградата и собственика</div>
+  <div class="grid-2">
+
+    <div class="field">
+      <label for="owner">Три имена <span class="req">*</span></label>
+      <input id="owner" type="text" placeholder="Иван Иванов Петров" autocomplete="name">
+      <div class="field-msg" id="owner-msg"></div>
+    </div>
+
+    <div class="field">
+      <label for="apt">Апартамент № <span class="req">*</span></label>
+      <input id="apt" type="text" placeholder="12">
+      <div class="field-msg" id="apt-msg"></div>
+    </div>
+
+    <div class="field">
+      <label for="address">Адрес на сградата <span class="req">*</span></label>
+      <input id="address" type="text" placeholder="гр. София, ул. Пример №5, вх. А">
+      <div class="field-msg" id="address-msg"></div>
+    </div>
+
+    <div class="field">
+      <label for="units">Брой самостоятелни обекти <span class="req">*</span></label>
+      <input id="units" type="number" min="2" max="500" placeholder="24">
+      <div class="field-msg" id="units-msg"></div>
+    </div>
+
+    <div class="field">
+      <label for="parking">Вид паркомясто</label>
+      <select id="parking">
+        <option value="индивидуално паркомясто в общ подземен гараж">Индивидуално в общ подземен гараж</option>
+        <option value="паркомясто на прилежащ терен към сградата">Паркомясто на прилежащ терен</option>
+        <option value="собствен гараж с отделно захранване">Собствен гараж (отделно захранване)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="meetdate">Дата на събранието <span class="req">*</span></label>
+      <input id="meetdate" type="date">
+      <div class="field-msg" id="meetdate-msg">Датата трябва да е поне 7 дни напред (чл. 13 ЗУЕС).</div>
+    </div>
+
+    <div class="field">
+      <label for="manager">Управител на ЕС <span class="req">*</span></label>
+      <input id="manager" type="text" placeholder="Мария Георгиева Петрова">
+      <div class="field-msg" id="manager-msg"></div>
+    </div>
+
+    <div class="field">
+      <label for="edb">Електроразпределително дружество</label>
+      <select id="edb">
+        <option value="ЕВН България Електроразпределение ЕАД" data-short="ЕВН">ЕВН България (Пловдив, Югоизточна България)</option>
+        <option value="Електроразпределение Юг ЕАД" data-short="ЕРЮ">Електроразпределение Юг (София, Югозападна)</option>
+        <option value="Електроразпределение Север АД" data-short="ЕРС">Електроразпределение Север (Северна България)</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ CHECKLIST CARD ═══════════════════════════════════ -->
+<div class="card chklist-card">
+  <div class="card-title"><span class="icon">☑️</span> Контролен списък — готовност</div>
+  <ul class="chklist">
+    <li><div class="ck-dot" id="ck-owner"></div><span>Пълно три-компонентно имe</span></li>
+    <li><div class="ck-dot" id="ck-address"></div><span>Адрес на сградата</span></li>
+    <li><div class="ck-dot" id="ck-units"></div><span>Брой обекти (мин. 2)</span></li>
+    <li><div class="ck-dot" id="ck-date"></div><span>Дата ≥ 7 дни напред</span></li>
+    <li><div class="ck-dot" id="ck-manager"></div><span>Управителят e посочен</span></li>
+    <li><div class="ck-dot" id="ck-apt"></div><span>Номер на апартамента</span></li>
+  </ul>
+</div>
+
+<!-- ══ DOCUMENTS CARD ═══════════════════════════════════ -->
+<div class="card doc-card">
+  <div class="card-title"><span class="icon">📄</span> Документи</div>
+
+  <div class="tabs">
+    <button class="tab active" data-doc="invite">📋 Покана за събрание</button>
+    <button class="tab" data-doc="protocol">✅ Протокол за съгласие</button>
+    <button class="tab" data-doc="letter">✉️ Писмо до ЕРД</button>
+    <button class="tab" data-doc="declaration">📜 Декларация</button>
+  </div>
+
+  <!-- hidden print header, shown only when printing -->
+  <div class="print-doc-header" id="printHeader" style="display:none"></div>
+
+  <div class="doc-box" id="docOutput"></div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="copyDoc()">📋 Копирай</button>
+    <button class="btn btn-green" onclick="printDoc()">🖨️ Принтирай</button>
+    <button class="btn" onclick="downloadDoc()">⬇️ Изтегли .txt</button>
+    <button class="btn" onclick="printAll()">🗂️ Принтирай всички</button>
+  </div>
+
+  <div class="legal-note">
+    <span class="ico">⚠️</span>
+    <span>Документите са типови шаблони, съобразени с <strong>ЗУЕС (изм. ДВ бр. 105/2023)</strong> и действащите наредби.
+    Те не заместват правна консултация. Решението на ОС подлежи на обжалване в <strong>30-дневен срок</strong> по чл. 40 ЗУЕС.</span>
+  </div>
+</div>
+
+<!-- ══ PRICING / UPSELL ══════════════════════════════════ -->
+<div class="upsell">
+  <span class="badge">💼 Пълна услуга</span>
+  <h3>Искаш някой да свърши всичко вместо теб?</h3>
+  <p>Ако документите ти изглеждат сложни или просто нямаш желание да се занимаваш
+     с управителя и дружеството — предлагаме пълна координация от А до Я.</p>
+
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <h4>📄 Само документи</h4>
+      <div class="price"><sup>€</sup>15</div>
+      <div class="desc">Генерирани, проверени и изпратени от специалист.</div>
+      <ul class="items">
+        <li>4 персонализирани документа</li>
+        <li>PDF + редактируем .docx</li>
+        <li>Доставка до 24 ч.</li>
+      </ul>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="feat-badge">Най-популярно</div>
+      <h4>🛠️ Пълна координация</h4>
+      <div class="price"><sup>€</sup>80–200</div>
+      <div class="desc">Обработваме всичко вместо теб — от ОС до финалното присъединяване.</div>
+      <ul class="items">
+        <li>Всички документи</li>
+        <li>Подготовка на събранието</li>
+        <li>Комуникация с ЕРД</li>
+        <li>Проследяване на статуса</li>
+      </ul>
+    </div>
+
+    <div class="pricing-card">
+      <h4>🤝 Партньор монтажник</h4>
+      <div class="price">по договаряне</div>
+      <div class="desc">Свързваме те с лицензиран електротехник в твоя град.</div>
+      <ul class="items">
+        <li>Сертифициран изпълнител</li>
+        <li>Средна цена: €150–450 монтаж</li>
+        <li>Гаранция на труда</li>
+      </ul>
+    </div>
+
+    <div class="pricing-card">
+      <h4>⚖️ Правна консултация</h4>
+      <div class="price">по договаряне</div>
+      <div class="desc">При отказ от ОС — стъпки за обжалване по чл. 40 ЗУЕС.</div>
+      <ul class="items">
+        <li>Анализ на протокола</li>
+        <li>Жалба до районен съд</li>
+        <li>Представителство</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="upsell-cta">
+    <a class="btn btn-primary" href="mailto:info@zaryadnopro.bg?subject=Запитване%20за%20пълна%20услуга">✉️ Свържи се с нас</a>
+    <small>Отговаряме в рамките на 24 часа в работни дни.</small>
+  </div>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <span>© 2025 ЗарядноПро · Документи съгласно ЗУЕС (ДВ 2023)</span>
+  <span>Не е правна консултация · <a href="mailto:info@zaryadnopro.bg">info@zaryadnopro.bg</a></span>
+</footer>
+
+</div><!-- /wrap -->
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════ -->
+<script>
+// ─── Utilities ───────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+
+function v(id, fallback) {
+  const el = $(id);
+  if (!el) return fallback || '';
+  const val = el.value.trim();
+  return val || fallback || '';
+}
+
+function fmtDate(iso) {
+  if (!iso) return '[дата]';
+  const [y, m, d] = iso.split('-');
+  const months = ['януари','февруари','март','април','май','юни',
+                  'юли','август','септември','октомври','ноември','декември'];
+  return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y} г.`;
+}
+
+function todayISO() { return new Date().toISOString().slice(0, 10); }
+
+// ─── Validation ──────────────────────────────────────────────────────────────
+const FIELDS = ['owner','apt','address','units','meetdate','manager'];
+
+function validate(id) {
+  const val = $(id)?.value?.trim() ?? '';
+  switch (id) {
+    case 'owner':   return val.split(/\s+/).filter(Boolean).length >= 2;
+    case 'apt':     return val.length > 0;
+    case 'address': return val.length >= 6;
+    case 'units':   return val !== '' && parseInt(val, 10) >= 2;
+    case 'meetdate': {
+      if (!val) return false;
+      const chosen = new Date(val);
+      const min = new Date(); min.setDate(min.getDate() + 7);
+      return chosen >= min;
+    }
+    case 'manager': return val.split(/\s+/).filter(Boolean).length >= 1;
+    default:        return val.length > 0;
+  }
+}
+
+const MSGS = {
+  owner:   { err: 'Въведи поне две имена.', ok: '✓ Добре.' },
+  apt:     { err: 'Въведи номер на апартамента.' },
+  address: { err: 'Въведи пълен адрес (мин. 6 знака).' },
+  units:   { err: 'Въведи брой (мин. 2 обекта).' },
+  meetdate:{ err: 'Датата трябва да е поне 7 дни напред (чл. 13 ЗУЕС).', ok: '✓ Достатъчен срок.' },
+  manager: { err: 'Въведи име на управителя.' },
+};
+
+function updateField(id) {
+  const el   = $(id);
+  const msg  = $(`${id}-msg`);
+  if (!el || !msg) return;
+  const ok   = validate(id);
+  el.classList.toggle('has-error', !ok && el.value.trim() !== '');
+  if (el.value.trim() === '') {
+    msg.className = 'field-msg';
+    msg.textContent = '';
+  } else if (!ok) {
+    msg.className = 'field-msg err';
+    msg.textContent = MSGS[id]?.err ?? '';
+  } else {
+    msg.className = MSGS[id]?.ok ? 'field-msg ok' : 'field-msg';
+    msg.textContent = MSGS[id]?.ok ?? '';
+  }
+}
+
+function updateProgress() {
+  const total  = FIELDS.length;
+  const filled = FIELDS.filter(validate).length;
+  const pct    = Math.round((filled / total) * 100);
+  $('barFill').style.width = pct + '%';
+  $('progCount').textContent = `${filled} / ${total}`;
+  const lbl = $('progLabel');
+  if (pct === 100) { lbl.textContent = '✓ Всички задължителни полета са попълнени'; lbl.style.color = 'var(--green)'; }
+  else            { lbl.textContent = 'Попълни задължителните полета';              lbl.style.color = ''; }
+
+  // checklist dots
+  const map = { 'ck-owner': 'owner', 'ck-apt': 'apt', 'ck-address': 'address',
+                'ck-units': 'units', 'ck-date': 'meetdate', 'ck-manager': 'manager' };
+  for (const [dotId, fieldId] of Object.entries(map)) {
+    const dot = $(dotId);
+    if (validate(fieldId)) { dot.classList.add('ok'); dot.textContent = '✓'; }
+    else                   { dot.classList.remove('ok'); dot.textContent = ''; }
+  }
+}
+
+// ─── Document text builders ──────────────────────────────────────────────────
+function buildInvite() {
+  const owner   = v('owner',   '[Три имена на собственика]');
+  const apt     = v('apt',     '[№]');
+  const address = v('address', '[адрес на сградата]');
+  const date    = fmtDate($('meetdate')?.value);
+  const manager = v('manager', '[Управител]');
+
+return `ПОКАНА
+за свикване на общо събрание на етажната собственост
+
+Адрес на сградата: ${address}
+
+Уважаеми съсобственици,
+
+Аз, ${owner}, собственик на самостоятелен обект — апартамент № ${apt} в горепосочената сграда, на основание чл. 12, ал. 1 от Закона за управление на етажната собственост (ЗУЕС, обн. ДВ бр. 6/2009, изм. ДВ бр. 105/2023), отправям настоящата покана за свикване на общо събрание.
+
+ДАТА:   ${date}
+ЧАС:    [посочете час]
+МЯСТО:  [фоайе / зала / друго удобно място в сградата]
+
+════════════════════════════════════
+ДНЕВЕН РЕД
+════════════════════════════════════
+1. Разглеждане и гласуване на решение по чл. 17, ал. 2, т. 6 ЗУЕС за монтаж на зарядна точка за електромобил (AC Wallbox) в паркомяото, ползвано от ${owner} (ап. ${apt}).
+
+2. Определяне на условията за монтаж: захранване, измерване, разпределение на разходи и отговорности.
+
+3. Разни.
+
+════════════════════════════════════
+ВАЖНО
+════════════════════════════════════
+• Поканата е изпратена не по-малко от 7 дни преди датата на събранието (чл. 13, ал. 1 ЗУЕС).
+• При липса на кворум събранието се провежда 1 час по-късно на същото място и е редовно при явяване на каквото и да е мнозинство (чл. 15, ал. 3 ЗУЕС).
+• Гласуването по т. 1 изисква повече от 50 % от идеалните части от общите части (чл. 17, ал. 2, т. 6 ЗУЕС) — не обикновено мнозинство от присъстващи хора.
+• Приложена е кратка техническа информация за планираната зарядна точка.
+
+С уважение,
+${owner} — ап. ${apt}
+${address}
+
+Дата на изпращане: ${fmtDate(todayISO())}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function buildProtocol() {
+  const owner   = v('owner',   '[Три имена на собственика]');
+  const apt     = v('apt',     '[№]');
+  const address = v('address', '[адрес на сградата]');
+  const units   = v('units',   '[брой]');
+  const parking = v('parking', '[тип паркомясто]');
+  const date    = fmtDate($('meetdate')?.value);
+  const manager = v('manager', '[Управител]');
+
+return `ПРОТОКОЛ № ___
+от общо събрание на етажната собственост
+
+Адрес:                ${address}
+Брой самостоятелни обекти: ${units}
+Дата:                 ${date}
+Час на начало:        [посочете]
+Председателстващ:     ${manager}
+
+Събранието е свикано на основание чл. 12 ЗУЕС по искане на ${owner} (ап. ${apt}).
+
+════════════════════════════════════════════════
+Р Е Ш Е Н И Е
+(чл. 17, ал. 2, т. 6 ЗУЕС, изм. ДВ бр. 105/2023)
+════════════════════════════════════════════════
+
+Общото събрание, с мнозинство ПОВЕЧЕ ОТ 50 % от идеалните части от общите части на сградата, РЕШИ:
+
+1. МЯСТО: Разрешава монтаж на зарядна точка за електромобил (AC Wallbox) в/на ${parking}, ползвано от ${owner} (ап. ${apt}).
+
+2. КАБЕЛНО ТРАСЕ: Кабелът се полага по маршрут, описан в приложената техническа схема, одобрена от правоспособен електроинженер. Трасето не засяга евакуационни пътища, аварийно осветление или носещи конструкции.
+
+3. СОБСТВЕНОСТ: Зарядната точка е лична собственост на ${owner}. Тя не се трансформира в обща собственост автоматично при прехвърляне на апартамента, освен ако страните не уговорят друго писмено.
+
+4. ЗАХРАНВАНЕ: [индивидуална партида на собственика / нова отделна партида — изберете приложимото и заличете другото].
+
+5. ИЗМЕРВАНЕ: Потреблението се регистрира чрез отделен електромер на името на ${owner}, монтиран и пломбиран от лицензиран електротехник и вписан в партидата на ЕРД.
+
+6. РАЗХОДИ: Всички разходи — проект, материали, монтаж, присъединяване към мрежата и бъдеща поддръжка — са изцяло за сметка на ${owner}. Останалите собственици не поемат никакви финансови задължения, свързани с тази инсталация.
+
+7. ПОДДРЪЖКА: ${owner} осигурява техническа проверка на инсталацията поне веднъж на 12 месеца от лицензиран електротехник и уведомява управителя при всяка установена нередност.
+
+8. ОТГОВОРНОСТ ЗА ВРЕДИ: ${owner} носи пълна имуществена отговорност за вреди, причинени на трети лица, общи части или съседни имоти вследствие на монтажа, експлоатацията или повреда на инсталацията.
+
+9. ЗАСТРАХОВКА: ${owner} се задължава да застрахова инсталацията срещу пожар и токов удар и да предостави копие от полицата на управителя в 30-дневен срок от сключването й.
+
+10. ВЪЗСТАНОВЯВАНЕ: При окончателен демонтаж ${owner} за своя сметка привежда засегнатите общи части (стени, мазилка, настилка) в първоначален вид в срок до 60 дни.
+
+11. ДОСТЪП: Управителят или упълномощен техник има право на достъп до съоръжението за проверка след предварително уведомление (24 ч.), а при авария — незабавно.
+
+12. АВАРИЙНО ИЗКЛЮЧВАНЕ: При непосредствена опасност управителят може временно да прекъсне захранването без предизвестие до отстраняване на причината.
+
+13. ПОЛЗВАНЕ: Съоръжението е за лична употреба на ${owner}. Достъп на трети лица е допустим само с писмено уведомление до управителя.
+
+14. БЪДЕЩО ПРИСЪЕДИНЯВАНЕ: Нови собственици, желаещи подобна инсталация чрез същото трасе, дължат пропорционален дял от разходите за изградената обща инфраструктура и могат да ползват трасето само след ново решение на ОС.
+
+15. СРОК ЗА МОНТАЖ: Монтажът се завършва и въвежда в експлоатация в срок до 12 месеца от датата на настоящото решение. При неспазване на срока решението се обезсилва автоматично.
+
+════════════════════════════════════════════════
+ГЛАСУВАНЕ
+════════════════════════════════════════════════
+
+Общо идеални части на присъстващите: _______ %
+Гласували „ЗА":          _______ %  (необходимо: > 50 % от ид. части на СГРАДАТА)
+Гласували „ПРОТИВ":      _______ %
+Въздържали се:           _______ %
+Кворум налице:           ДА / НЕ
+
+┌──────────────────────────────┬──────┬─────────────┬───────────┬──────────┐
+│ Три имена                    │  Ап. │ Ид. части % │    Вот    │ Подпис   │
+├──────────────────────────────┼──────┼─────────────┼───────────┼──────────┤
+│                              │      │             │           │          │
+│                              │      │             │           │          │
+│                              │      │             │           │          │
+│                              │      │             │           │          │
+│                              │      │             │           │          │
+│                              │      │             │           │          │
+└──────────────────────────────┴──────┴─────────────┴───────────┴──────────┘
+
+Протоколът е изготвен в 7-дневен срок (чл. 16, ал. 4 ЗУЕС).
+
+Председателстващ: ____________________________ (${manager})
+Секретар:         ____________________________
+Преброители:      ____________________________ / ____________________________
+
+⚠ Решението подлежи на обжалване пред районния съд в 30-дневен срок от получаването на протокола (чл. 40 ЗУЕС). Правото на обжалване принадлежи на всеки собственик, гласувал „против" или „въздържал се".`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function buildLetter() {
+  const owner   = v('owner',   '[Три имена на собственика]');
+  const apt     = v('apt',     '[№]');
+  const address = v('address', '[адрес на сградата]');
+  const edb     = v('edb',     '[Електроразпределително дружество]');
+  const edbShort = $('edb')?.selectedOptions?.[0]?.dataset?.short ?? 'ЕРД';
+
+return `ДО
+${edb}
+
+ОТ:    ${owner}
+ЕГН:   ___________________________
+Адрес: ${address}, ап. ${apt}
+Тел.:  ___________________________
+Имейл: ___________________________
+
+════════════════════════════════════════════════
+З А Я В Л Е Н И Е
+за присъединяване на зарядна точка за
+електромобил към самостоятелна партида
+════════════════════════════════════════════════
+
+Уважаеми господа,
+
+Аз, ${owner}, собственик на самостоятелен обект (ап. ${apt}) в жилищна сграда с адрес ${address}, отправям настоящото заявление за присъединяване към електроразпределителната мрежа на зарядна точка за електромобил (AC Wallbox), монтирана на ползвано от мен паркомясто.
+
+════════════════════════════════════════════════
+ТЕХНИЧЕСКИ ДАННИ НА ЗАРЯДНАТА ТОЧКА
+════════════════════════════════════════════════
+Производител и модел:     ___________________________
+Тип ток:                  AC еднофазен / AC трифазен (отбележете)
+Максимална мощност:       ___________ kW
+Номинален ток:            ___________ А
+Захранващо напрежение:    230 V / 400 V (отбележете)
+CE сертификат №:          ___________________________
+Стандарт за зареждане:    IEC 62196-2 (Type 2)
+IP клас:                  ___________ (мин. IP44 за закрити гаражи)
+
+════════════════════════════════════════════════
+ИСКАНЕ
+════════════════════════════════════════════════
+Моля зарядната точка да бъде:
+
+✓ Присъединена на отделен електромер
+✓ Регистрирана на самостоятелна партида на мое име
+✓ Измерена с одобрен тип електромер съгласно изискванията на ${edbShort}
+
+════════════════════════════════════════════════
+ПРИЛОЖЕНИ ДОКУМЕНТИ
+════════════════════════════════════════════════
+[ ] Нотариален акт / документ за собственост / договор за наем на паркомясто
+[ ] Протокол от ОС с решение по чл. 17, ал. 2, т. 6 ЗУЕС (всички 15 точки)
+[ ] Ситуационна схема на паркомястото и кабелното трасе
+[ ] Технически паспорт и CE декларация на зарядната точка
+[ ] Електрическа схема, изготвена от правоспособен проектант (РП)
+[ ] Удостоверение за клас по реакция на огън на монтажната повърхност (за гаражи, чл. 658 от Наредба Iз-1971)
+
+Оставам на Ваше разположение за допълнителна информация.
+
+С уважение,
+
+${owner}                               Дата: ${fmtDate(todayISO())}
+(подпис) _______________________
+
+Адрес: ${address}, ап. ${apt}`;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+function buildDeclaration() {
+  const owner   = v('owner',   '[Три имена на собственика]');
+  const apt     = v('apt',     '[№]');
+  const address = v('address', '[адрес на сградата]');
+
+return `Д Е К Л А Р А Ц И Я
+за приемане на отговорност при монтаж и
+експлоатация на зарядна точка за електромобил
+
+Долуподписаният/-ата:
+
+Имe:              ${owner}
+ЕГН:              ___________________________
+Л.К. №:           _______________, издадена от __________ на ___________
+Постоянен адрес:  ${address}, ап. ${apt}
+
+════════════════════════════════════════════════
+Д Е К Л А Р И Р А М:
+════════════════════════════════════════════════
+
+1. ЗАКОНОВА БАЗА: Запознат/-а съм с разпоредбите на:
+   • Закона за управление на етажната собственост (ЗУЕС);
+   • Закона за енергетиката и подзаконовите актове към него;
+   • Наредба № Iз-1971 за ПБЗН (за монтаж в гаражи);
+   • Наредба № 3/2004 за устройството на електрическите уредби.
+
+2. ТЕХНИЧЕСКИ ИЗИСКВАНИЯ: Зарядната точка:
+   а) притежава CE маркировка и отговаря на стандарт IEC 62196-2;
+   б) ще бъде монтирана от лицензиран електротехник/фирма;
+   в) ще е монтирана на повърхност с клас по реакция на огън А2 или по-висок (чл. 658, Наредба Iз-1971), при монтаж в гараж;
+   г) при наличие на пожароизвестителна система в сградата — ще е свързана с блокировка за автоматично изключване при задействането й.
+
+3. ОТГОВОРНОСТ: Поемам пълна лична материална и юридическа отговорност за:
+   а) всички вреди, причинени на трети лица, общи части или съседни имоти вследствие на монтажа или експлоатацията;
+   б) периодична техническа проверка (минимум веднъж на 12 месеца);
+   в) незабавно уведомяване на управителя при констатирана повреда.
+
+4. ЗАСТРАХОВКА: Задължавам се да застрахова инсталацията и да предоставя копие от полицата на управителя ежегодно.
+
+5. ДЕМОНТАЖ: При прекратяване на ползването — извадж и привеждам общите части в първоначален вид за своя сметка до 60 дни.
+
+6. НАКАЗАТЕЛНА ОТГОВОРНОСТ: Известна ми е отговорността по чл. 313 НК за деклариране на неверни обстоятелства.
+
+Дата:    ${fmtDate(todayISO())}
+Място:   ${address}
+
+Декларатор: _______________________
+            (подпис)`;
+}
+
+// ─── Tabs & Render ────────────────────────────────────────────────────────────
+const DOCS = {
+  invite:      { build: buildInvite,      file: 'pokana-obshto-sabranie',    title: 'Покана за общо събрание' },
+  protocol:    { build: buildProtocol,    file: 'protokol-saglasie-15t',     title: 'Протокол за съгласие (15 точки)' },
+  letter:      { build: buildLetter,      file: 'pismo-erd',                 title: 'Заявление до ЕРД' },
+  declaration: { build: buildDeclaration, file: 'deklaraciya-otgovornost',   title: 'Декларация за отговорност' },
+};
+let active = 'invite';
+
+function render() {
+  $('docOutput').textContent = DOCS[active].build();
+  $('printHeader').textContent =
+    `ЗарядноПро · ${DOCS[active].title} · Генериран: ${fmtDate(todayISO())} · zaryadnopro.bg`;
+  updateProgress();
+}
+
+document.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    active = btn.dataset.doc;
+    render();
+  });
+});
+
+document.querySelectorAll('input, select').forEach(el => {
+  el.addEventListener('input',  () => { updateField(el.id); render(); });
+  el.addEventListener('change', () => { updateField(el.id); render(); });
+  el.addEventListener('blur',   () => updateField(el.id));
+});
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+let toastTimer;
+function toast(msg) {
+  clearTimeout(toastTimer);
+  $('toast').textContent = msg;
+  $('toast').classList.add('show');
+  toastTimer = setTimeout(() => $('toast').classList.remove('show'), 2500);
+}
+
+// ─── Actions ─────────────────────────────────────────────────────────────────
+function copyDoc() {
+  navigator.clipboard.writeText($('docOutput').textContent)
+    .then(() => toast('✓ Копирано в клипборда!'))
+    .catch(() => toast('⚠ Браузърът отказа достъп до клипборда.'));
+}
+
+function downloadDoc() {
+  const text = $('docOutput').textContent;
+  const name = DOCS[active].file;
+  const blob = new Blob(['\uFEFF' + text], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: name + '.txt' });
+  a.click();
+  URL.revokeObjectURL(url);
+  toast(`⬇️ Изтеглено: ${name}.txt`);
+}
+
+function openPrintWindow(title, content) {
+  const win = window.open('', '_blank', 'width=860,height=720,menubar=yes,toolbar=yes');
+  win.document.write(`<!DOCTYPE html>
+<html lang="bg"><head>
+<meta charset="UTF-8">
+<title>${title}</title>
+<style>
+  @page { size: A4; margin: 2cm 2.2cm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 11.5pt; line-height: 1.9;
+    color: #000; background: #fff;
+    margin: 0; padding: 0;
+    white-space: pre-wrap;
+  }
+  .hdr {
+    font-family: Arial, sans-serif; font-size: 8.5pt; color: #777;
+    border-bottom: 0.5pt solid #ccc; padding-bottom: 6pt;
+    margin-bottom: 18pt; display: flex; justify-content: space-between;
+  }
+  .content { page-break-inside: avoid; }
+</style>
+</head><body>
+<div class="hdr">
+  <span>⚡ ЗарядноПро · zaryadnopro.bg</span>
+  <span>${title} · ${fmtDate(todayISO())}</span>
+</div>
+<div class="content">${content.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+</body></html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(() => { win.print(); }, 450);
+}
+
+function printDoc() {
+  openPrintWindow(DOCS[active].title, $('docOutput').textContent);
+}
+
+function printAll() {
+  const keys  = Object.keys(DOCS);
+  const pages = keys.map(k => DOCS[k].build()).join('\n\n\n');
+
+  const win = window.open('', '_blank', 'width=860,height=720,menubar=yes,toolbar=yes');
+  let html = `<!DOCTYPE html>
+<html lang="bg"><head>
+<meta charset="UTF-8">
+<title>ЗарядноПро — Всички документи</title>
+<style>
+  @page { size: A4; margin: 2cm 2.2cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Times New Roman", Times, serif; font-size: 11.5pt; line-height: 1.9; color: #000; background: #fff; margin: 0; padding: 0; }
+  .hdr { font-family: Arial, sans-serif; font-size: 8.5pt; color: #777; border-bottom: 0.5pt solid #ccc; padding-bottom: 6pt; margin-bottom: 18pt; display: flex; justify-content: space-between; }
+  .doc { page-break-after: always; white-space: pre-wrap; }
+  .doc:last-child { page-break-after: auto; }
+  .doc-title { font-family: Arial, sans-serif; font-size: 9pt; color: #555; margin-bottom: 14pt; border-bottom: 0.5pt solid #ddd; padding-bottom: 5pt; }
+</style>
+</head><body>`;
+
+  keys.forEach((k, i) => {
+    html += `<div class="doc">
+<div class="hdr"><span>⚡ ЗарядноПро · zaryadnopro.bg</span><span>Документ ${i+1} от ${keys.length} · ${fmtDate(todayISO())}</span></div>
+<div class="doc-title">Документ ${i+1}: ${DOCS[k].title}</div>${DOCS[k].build().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+</div>`;
+  });
+
+  html += '</body></html>';
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+  setTimeout(() => { win.print(); }, 500);
+  toast('🖨️ Отваря се прозорец за принтиране на всички документи...');
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
